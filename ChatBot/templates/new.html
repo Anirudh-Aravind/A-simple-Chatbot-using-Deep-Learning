@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <title>Bot Joe</title>
+  <head>
+      <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      src="static/images/Bot_img.png"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <style>
+      alert("This page has been loaded")
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>
+        <img
+           src="static/images/Bot_img.png"
+          alt="Joe"
+          style="width:40px;height:50px;"
+        /> Your ChatBot Assist
+      </h1>
+    </center>
+    <div class="box"></div>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+          <img
+             src="static/images/Bot_img.png"
+            alt="Joe"
+            style="width:40px;height:40px;"
+          />
+          <p class="botText">
+            <span>Hi! I'm Joe your personal ChatBot</span>
+          </p>
+        </div>
+
+        <div class="row">
+
+            <input class="textInput" type="text" name="question" id="question"/>
+
+          <div class="col-lg-3">
+            <button class="btn btn-primary btn-block" id="submit-button">Send</button>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col">
+            <p id="response"></p>
+          </div>
+        </div>
+
+        </div>
+       </div>
+
+    <script>
+      jQuery(document).ready(function() {
+      $("#submit-button").click(function(e) {
+                e.preventDefault();
+      $.ajax({
+                    type: "POST",
+                    url: "/chatbot",
+                    data: {
+                        question: $("#question").val()
+                    },
+                    success: function(result) {
+                      $("#response").append("<br>Me: "+$("#question").val()+ "<br> Joe: "+result.response);
+                      $("#question").val("")
+                    },
+                    error: function(result) {
+                        alert('error');
+                    }
+                });
+      });
+      });
+    </script>
+
+  </body>
+</html>
